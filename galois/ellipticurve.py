@@ -69,10 +69,10 @@ class EllipticCurve:
     """ Implements EC structure.
         EC is defined by equation: y^2 = x^3 + Ax + B 
     """
+
     def __init__(self,A,B, p=0,n=1):
-        if p:
-            ECPoint.p = p 
-            ECPoint.n = n 
+        self.p = p 
+        self.n = n 
         self.A = A 
         self.B = B 
     
