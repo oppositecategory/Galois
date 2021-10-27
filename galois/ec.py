@@ -43,8 +43,9 @@ class EllipticCurve:
             self.B = B 
     
     def _add_mod_p(self, P: ECPoint, Q : ECPoint):
+        """ Arithmetic done over F_p^n."""
         E = lambda x,y: pow(y,2) - pow(x,3) - self.A*x - self.B
-        if E(P.x,P.y) !=0 or E(Q.x,Q.y) != 0:
+        if E(P.x,P.y) % self.p !=0 or E(Q.x,Q.y) % self.p != 0:
             raise RuntimeError("Points must lie on the curve.")
 
         if isinstance(Q, PointInfinity):
@@ -117,7 +118,6 @@ class EllipticCurve:
             return self.multiply(self.addition(P,P), n/2)
 
     def _plot_elliptic_curve_real(self):
-        # Source: https://stackoverflow.com/questions/19756043/python-matplotlib-elliptic-curves
         y, x = np.ogrid[-5:5:100j, -5:5:100j]
         E = pow(y,2) - self.A * x - self.B
         plt.contour(x.ravel(),y.ravel(), E, [0])
@@ -125,10 +125,12 @@ class EllipticCurve:
         plt.show()
     
     def _plot_elliptic_curve_finite_field(self):
-        x = y = np.array([i for i in range(self.size)])
-        E = (pow(y,2) - self.A * x - self.B) % self.p
-        points_modp = np.where(E==0)[0]
-        plt.scatter(x[points_modp],y[points_modp])
+        plt.title(f'E: $y^2=x^3+{self.A}x + {self.B}$ over finite field with ${self.p}^{self.n}$ elements.')
+        xx, yy = np.meshgrid(np.arange(self.p), np.arange(self.p))
+        #points = np.dstack(np.meshgrid(F_p,F_p)).reshape(-1,2)
+        E = lambda x,y: (pow(y,2) - pow(x,3) - self.A * x - self.B) % self.p
+        curve_points = np.where(E(xx,yy)==0)
+        plt.scatter(xx[curve_points],yy[curve_points])
         plt.grid()
         plt.show()
 
@@ -138,7 +140,8 @@ class EllipticCurve:
         else:
             self._plot_elliptic_curve_real()
 
-curve = EllipticCurve(A=-4,B=20)
+curve = EllipticCurve(A=2,B=3,p=97)
+curve.plot_elliptic_curve()
 
 
 
