@@ -80,38 +80,3 @@ class SymmetricECC:
         ciphertext, tag = cipher.encrypt_and_digest(message)
 
         return ciphertext
-
-
-
-alice = SymmetricECC(Curve25519(), 3)
-bob = SymmetricECC(Curve25519(), 5)
-
-
-
-#alice.set_public_key(bob.get_public_key())
-#alice.encrypt_message('hi')
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-        
-     
-
-
