@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt 
 
+
 class PointInfinity(object):
     """ Wrapper to indicate the point at infinity serving as the identity element. """
     def __init__(self):
@@ -140,10 +141,9 @@ class EllipticCurve:
         else:
             self._plot_elliptic_curve_real()
 
+
 curve = EllipticCurve(A=2,B=3,p=97)
-curve.plot_elliptic_curve()
-
-
+#curve.plot_elliptic_curve()
 
 """ 
 Required interface:
@@ -153,6 +153,7 @@ P = ECPoint(X,Y)
 Q = ECPoint(X,Y)
 curve1.addition(P,Q) # Working over F_p
 curve.addition(P,Q) 
+
 """
 
 
