@@ -80,3 +80,7 @@ class SymmetricECC:
         ciphertext, tag = cipher.encrypt_and_digest(message)
 
         return ciphertext
+
+    def decrypt_message(self, cipher):
+        cipher = AES.new(self.shared_key, AES.MODE_EAX)
+        plaintext = cipher.decrypt_and_verify(cipher, tag)
